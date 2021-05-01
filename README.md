@@ -14,7 +14,7 @@ Once all the above requirements are met, do the following
 1. Git clone this repository and cd into it.
 2. Run `docker build -t cowin --rm .`
 3. Run `docker run -it --name cowin-schedule --rm cowin`
-4. Run `python covin_slot_tracker.py <DISTRICT ID> <SECRET IFTTT TOKEN> <MINMUM AGE LIMIT (18 or 45)>` in the interactive shell
+4. Run `python covin_slot_tracker.py <DISTRICT ID> <SECRET IFTTT TOKEN> <MINIMUM AGE LIMIT (18 or 45)>` in the interactive shell
 
 #### Example Usage and Response
 ```
