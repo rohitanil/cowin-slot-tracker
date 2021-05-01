@@ -3,7 +3,8 @@ Tracker to check the covid vaccine slot availability in India and send mobile no
 
 ## Requirements
 Docker must be installed in the local system. Refer [docker documentation](https://docs.docker.com/engine/install/) to set it locally based on your machine specification.
-
+If you are a Windows user and wants to setup docker, follow this [video](
+https://youtu.be/_9AWYlt86B8)
 ## How to use?
 There are two parts to this system
 1. Pinging the public COWIN API to get district wise data and checking for availability, every 15 minutes.
