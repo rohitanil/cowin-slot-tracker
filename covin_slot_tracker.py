@@ -2,6 +2,8 @@
 import sys
 import datetime,time
 import requests,json
+from twilio.rest import Client
+
 def getDate():
     """
     Function to get the current date
@@ -73,17 +75,24 @@ def checkAvailability(payload):
     
     return available_centers_str,unavailable_centers_str
 
+
+
 if __name__=="__main__":
-    D_ID = sys.argv[1]
+    DISTRICT_ID = sys.argv[1]
     SECRET_TOKEN = sys.argv[2]
+    ACCOUNT_SID = sys.argv[3]
+    TWILIO_PHONE_NUMBER = sys.argv[4]
+    CELL_PHONE_NUMBER = sys.argv[5]
+
+    client = Client(ACCOUNT_SID, SECRET_TOKEN)
     while(True):
         date = getDate()
-        data1 = pingCOWIN(date,D_ID)
+        data1 = pingCOWIN(date,DISTRICT_ID)
         available, unavailable = checkAvailability(data1)
         if (len(available)>0):
-            headers = {'Content-Type': 'application/json',}
-            data = {"value1": "Slot Available: "+available}
-            data = json.dumps(data)
-            print(data)
-            response = requests.post('https://maker.ifttt.com/trigger/notify/with/key/{k}'.format(k=SECRET_TOKEN), headers=headers, data=data)
+            msg_body = "Slots Available at "+available
+            print(msg_body)
+            client.messages.create(from_=TWILIO_PHONE_NUMBER,
+                       to=CELL_PHONE_NUMBER,
+                       body= msg_body)
         time.sleep(900)
