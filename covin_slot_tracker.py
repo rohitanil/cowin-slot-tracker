@@ -37,7 +37,7 @@ def pingCOWIN(date,district_id):
     response = requests.get(url)
     return json.loads(response.text)
 
-def checkAvailability(payload):
+def checkAvailability(payload, minAgeLimit):
     """
     Function to check availability in the hospitals from the json response from the public API
 
@@ -64,7 +64,7 @@ def checkAvailability(payload):
             for i in range(0,length):
                 sessions_len = len(payload['centers'][i]['sessions'])
                 for j in range(0,sessions_len):
-                    if(payload['centers'][i]['sessions'][j]['available_capacity']>0):
+                    if(payload['centers'][i]['sessions'][j]['available_capacity']>0 and payload['centers'][i]['sessions'][j]['min_age_limit']==minAgeLimit):
                         available_centers.add(payload['centers'][i]['name'])
                     else:
                         unavailable_centers.add(payload['centers'][i]['name'])
@@ -76,10 +76,11 @@ def checkAvailability(payload):
 if __name__=="__main__":
     D_ID = sys.argv[1]
     SECRET_TOKEN = sys.argv[2]
+    MIN_AGE_LIMIT= int(sys.argv[3])
     while(True):
         date = getDate()
         data1 = pingCOWIN(date,D_ID)
-        available, unavailable = checkAvailability(data1)
+        available, unavailable = checkAvailability(data1, MIN_AGE_LIMIT)
         if (len(available)>0):
             headers = {'Content-Type': 'application/json',}
             data = {"value1": "Slot Available: "+available}
