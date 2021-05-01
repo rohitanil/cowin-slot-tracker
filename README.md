@@ -1,5 +1,5 @@
-# cowin-slot-tracker
-Tracker to check the covid vaccine slot availability in India and send mobile notifications through IFTTT
+# Cowin-Slot-Tracker
+Tracker to check the covid vaccine slot availability in India and send mobile notifications through Twilio Messaging Service.
 
 ## Requirements
 Docker must be installed in the local system. Refer [docker documentation](https://docs.docker.com/engine/install/) to set it locally based on your machine specification.
@@ -7,18 +7,24 @@ Docker must be installed in the local system. Refer [docker documentation](https
 ## How to use?
 There are two parts to this system
 1. Pinging the public COWIN API to get district wise data and checking for availability, every 15 minutes.
-2. Relaying this information to the user's mobile via IFTTT app. For this, one must configure the IFTTT settings by following this. **DO AS MENTIONED IN THIS LINK**  [IFTTT setup](https://betterprogramming.pub/how-to-send-push-notifications-to-your-phone-from-any-script-6b70e34748f6)
-3. After successfully completing step 2, you will get the SECRET IFTTT TOKEN
+2. Relaying this information to the user's mobile via Twilio Messaging Service. For that, one must configure Twilio
+    1. Sign up on [Twilio](https://www.twilio.com/) using your email id. After verifying your email log into the Twilio Dashboard. For this purpose, we will remain on free trial.
+    2. Once you are in the dashboard, click **Get a trial phone number**.
+    3. Under Project Info, you can find the **ACCOUNT SID**, **AUTH TOKEN** and **PHONE NUMBER** (Twilio Phone Number and not yours). Make a note of these numbers.
+4. After successfully completing above steps, you are good to go.
 
 Once all the above requirements are met, do the following
-1. Git clone this repository and cd into it.
-2. Run `docker build -t cowin --rm .`
-3. Run `docker run -it --name cowin-schedule --rm cowin`
-4. Run `python covin_slot_tracker.py <DISTRICT ID> <SECRET IFTTT TOKEN>` in the interactive shell
+1. Git clone this repository(if you are techie enough), otherwise download the repository by clicking on **Download ZIP** under **Code**.
+2. Open Terminal and change your directory to the folder you have just cloned/ downloaded. (Remember to extract the .zip file if you have downloaded it)
+3. Make sure Docker Desktop is running.
+4. Run `docker build -t covin --rm .`
+5. Run `docker run -it --name covin-schedule --rm covin`
+6. Run `python covin_slot_tracker.py <DISTRICT_ID> <TWILIO AUTH TOKEN> <TWILIO ACCOUNT SID> <TWILIO PHONE NUMBER> <YOUR PHONE NUMBER>` in the interactive shell. Make sure your phone number has the country code. eg: +919xxxxxxxx
+7. If there is a slot available in the district code you have provided, you will receive an SMS on your phone.
 
 #### Example Usage and Response
 ```
-python covin_slot_tracker.py 391 asdadkaskdajncaj
+python covin_slot_tracker.py 391 09cbfca2asdad5ae4fe991ac8858adca1b AC6b24b0sdasuef906ed07sdfasd4e8d +1xxxxxxxxx +919xxxxxxxx
 
 {"value1": "Slot Available: Rahata RH, Taharabad RH, Shevgaon RH, KARJAT SDH2, CHICHONDI PATIL RH 2, WAMBORI RH 2, Rajur RH, Chichondi Patil RH, SAKUR RH 2, Samsherpur RH, Khirwire PHC, SHEVGAON RH2, Wambori RH, PUNTAMBA RH 2, Jamkhed RH, SAMSHERPUR RH 2, RAHURI RH 2, Taklibhan PHC, Takali Dokeshwar RH, Chapadgaon(S) PHC, Dr Mane Hospital, JAMKHED RH 2, Bota PHC, Puntamba RH, Topkhana HP, GHODEGAON RH 2, Bodhegaon RH, TAKALI DHOKESHWAR RH 2, TAHRABAD RH 2, Sakur RH, Shendi PHC, BODHEGAON RH 2, RAJUR RH 2, LONI RH 2"}
 
