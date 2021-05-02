@@ -19,16 +19,14 @@ Once all the above requirements are met, do the following
 2. Open Terminal and change your directory to the folder you have just cloned/ downloaded. (Remember to extract the .zip file if you have downloaded it)
 3. Make sure Docker Desktop is running.
 4. Run `docker build -t covin --rm .`
-5. Run `docker run -it --name covin-schedule --rm covin`
-6. Run `python covin_slot_tracker.py <DISTRICT_ID> <TWILIO AUTH TOKEN> <TWILIO ACCOUNT SID> <TWILIO PHONE NUMBER> <YOUR PHONE NUMBER>` in the interactive shell. Make sure your phone number has the country code. eg: +919xxxxxxxx
+5. Run `docker run -it --mount 'type=volume,src=settings,dst=/home/app_user/settings' --name covin-schedule --rm covin`
+6. Enter your settings
 7. If there is a slot available in the district code you have provided, you will receive an SMS on your phone.
 
-#### Alternative Way
-
-1. Create `settings.json` file similar to schema in `settings.example.json` and fill in your details.
-2. Run `docker build -t covin --rm .`
-3. Run `docker run -it --name covin-schedule --rm covin`
-4. Run `python covin_slot_tracker.py`
+If you want to change your settings, run 
+```
+docker run -e new_settings=true -it --mount 'type=volume,src=settings,dst=/home/app_user/settings' --name covin-schedule --rm covin
+```
 
 #### Example Usage and Response
 ```

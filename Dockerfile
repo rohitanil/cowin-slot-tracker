@@ -5,4 +5,5 @@ COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 USER app_user
 COPY . .
-CMD ["bash"]
+ENV new_settings "false"
+CMD ["sh", "-c", "./entrypoint.sh $new_settings"]

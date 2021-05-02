@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-import sys
 import datetime,time
-from os.path import isfile
+import os
+
 import requests,json
 from twilio.rest import Client
 
@@ -77,27 +77,16 @@ def checkAvailability(payload):
     return available_centers_str,unavailable_centers_str
 
 
-
 if __name__=="__main__":
-    settings = {}
-    if isfile("settings.json"):
-        with open("settings.json") as f:
-            settings = json.load(f)
+    with open(os.environ["settings_path"]) as f:
+        settings = json.load(f)
 
-    if not settings:
-        # Load from sys args
-        DISTRICT_ID = sys.argv[1]
-        SECRET_TOKEN = sys.argv[2]
-        ACCOUNT_SID = sys.argv[3]
-        TWILIO_PHONE_NUMBER = sys.argv[4]
-        CELL_PHONE_NUMBER = sys.argv[5]
-    else:
-        # Load from JSON file
-        DISTRICT_ID = settings["districtId"]
-        SECRET_TOKEN = settings["authToken"]
-        ACCOUNT_SID = settings["accountSID"]
-        TWILIO_PHONE_NUMBER = settings["twilioPhone"]
-        CELL_PHONE_NUMBER = settings["selfPhone"]
+    # Load from JSON file
+    DISTRICT_ID = settings["districtId"]
+    SECRET_TOKEN = settings["authToken"]
+    ACCOUNT_SID = settings["accountSID"]
+    TWILIO_PHONE_NUMBER = settings["twilioPhone"]
+    CELL_PHONE_NUMBER = settings["selfPhone"]
 
     client = Client(ACCOUNT_SID, SECRET_TOKEN)
 
