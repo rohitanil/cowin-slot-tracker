@@ -18,20 +18,27 @@ Once all the above requirements are met, do the following
 1. Git clone this repository(if you are techie enough), otherwise download the repository by clicking on **Download ZIP** under **Code**.
 2. Open Terminal and change your directory to the folder you have just cloned/ downloaded. (Remember to extract the .zip file if you have downloaded it)
 3. Make sure Docker Desktop is running.
-4. Run `docker build -t covin --rm .`
-5. Run `docker run -it --mount 'type=volume,src=settings,dst=/home/app_user/settings' --name covin-schedule --rm covin`
-6. Enter your settings
+4. Modify `settings.json` with your settings.   
+5. Run `docker build -t covin --rm .`
+6. Run `docker run -it --name covin-schedule --rm covin`
 7. If there is a slot available in the district code you have provided, you will receive an SMS on your phone.
 
-If you want to change your settings, run 
-```
-docker run -e new_settings=true -it --mount 'type=volume,src=settings,dst=/home/app_user/settings' --name covin-schedule --rm covin
-```
+If you want to change settings, rebuild the image and run(Step 5)
 
-#### Example Usage and Response
-```
-python covin_slot_tracker.py 391 09cbfca2asdad5ae4fe991ac8858adca1b AC6b24b0sdasuef906ed07sdfasd4e8d +1xxxxxxxxx +919xxxxxxxx
+#### Example Response
 
+sample settings.json
+```
+{
+  "districtId": "391",
+  "authToken": "09cbfca2asdad5ae4fe991ac8858adca1b",
+  "accountSID": "AC6b24b0sdasuef906ed07sdfasd4e8d",
+  "twilioPhone": "+1xxxxxxxxx",
+  "selfPhone": "+919xxxxxxxx"
+}
+```
+Response
+```
 {"value1": "Slot Available: Rahata RH, Taharabad RH, Shevgaon RH, KARJAT SDH2, CHICHONDI PATIL RH 2, WAMBORI RH 2, Rajur RH, Chichondi Patil RH, SAKUR RH 2, Samsherpur RH, Khirwire PHC, SHEVGAON RH2, Wambori RH, PUNTAMBA RH 2, Jamkhed RH, SAMSHERPUR RH 2, RAHURI RH 2, Taklibhan PHC, Takali Dokeshwar RH, Chapadgaon(S) PHC, Dr Mane Hospital, JAMKHED RH 2, Bota PHC, Puntamba RH, Topkhana HP, GHODEGAON RH 2, Bodhegaon RH, TAKALI DHOKESHWAR RH 2, TAHRABAD RH 2, Sakur RH, Shendi PHC, BODHEGAON RH 2, RAJUR RH 2, LONI RH 2"}
 
 Here 391 is the district id for Ahmednagar, Maharashtra
