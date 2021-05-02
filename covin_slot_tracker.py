@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import datetime,time
 import os
-
 import requests,json
 from twilio.rest import Client
 
@@ -40,26 +39,28 @@ def pingCOWIN(date,district_id):
     response = requests.get(url)
     return json.loads(response.text)
 
-def checkAvailability(payload):
+def checkAvailability(payload, age):
     """
-    Function to check availability in the hospitals from the json response from the public API
+    Function to check availability in the hospitals based on
+    user age from the json response from the public API
 
     Parameters
     ----------
     payload : JSON
+    age: INT
 
     Returns
     -------
     available_centers_str : String
         Available hospitals
-    unavailable_centers_str : String
-        Unavailable hospitals
+    total_available_centers : Integer
+        Total available hospitals
 
     """
     available_centers = set()
     unavailable_centers = set()
     available_centers_str = False
-    unavailable_centers_str = False
+    total_available_centers = 0
     
     if('centers' in payload.keys()):
        length = len(payload['centers'])
@@ -67,38 +68,45 @@ def checkAvailability(payload):
             for i in range(length):
                 sessions_len = len(payload['centers'][i]['sessions'])
                 for j in range(sessions_len):
-                    if(payload['centers'][i]['sessions'][j]['available_capacity']>0):
+                    if((payload['centers'][i]['sessions'][j]['available_capacity']>0) and
+                       (payload['centers'][i]['sessions'][j]['min_age_limit']<=age)):
                         available_centers.add(payload['centers'][i]['name'])
-                    else:
-                        unavailable_centers.add(payload['centers'][i]['name'])
             available_centers_str =  ", ".join(available_centers)
-            unavailable_centers_str = ", ".join(unavailable_centers)
+            total_available_centers = len(available_centers)
     
-    return available_centers_str,unavailable_centers_str
+    return available_centers_str,total_available_centers
 
 
 if __name__=="__main__":
-    with open(os.environ["settings_path"]) as f:
+    with open("settings.json") as f:
         settings = json.load(f)
 
     # Load from JSON file
-    DISTRICT_ID = settings["districtId"]
-    SECRET_TOKEN = settings["authToken"]
-    ACCOUNT_SID = settings["accountSID"]
-    TWILIO_PHONE_NUMBER = settings["twilioPhone"]
-    CELL_PHONE_NUMBER = settings["selfPhone"]
-
-    client = Client(ACCOUNT_SID, SECRET_TOKEN)
-
-    while(True):
-        date = getDate()
-        data1 = pingCOWIN(date,DISTRICT_ID)
-        available, unavailable = checkAvailability(data1)
-        if available:
-            msg_body = "Slots Available at "+available
-            client.messages.create(from_=TWILIO_PHONE_NUMBER,
-                       to=CELL_PHONE_NUMBER,
-                       body= msg_body)
-        else:
-            print("No Available Centers")
-        time.sleep(900)
+    key_list = ["districtId","authToken","accountSID","twilioPhone","selfPhone","userAge"]
+    if all(key in settings for key in key_list):
+        DISTRICT_ID = settings["districtId"]
+        SECRET_TOKEN = settings["authToken"]
+        ACCOUNT_SID = settings["accountSID"]
+        TWILIO_PHONE_NUMBER = settings["twilioPhone"]
+        CELL_PHONE_NUMBER = settings["selfPhone"]
+        USER_AGE = int(settings["userAge"])
+        
+        client = Client(ACCOUNT_SID, SECRET_TOKEN)
+        while(True):
+            date = getDate()
+            data1 = pingCOWIN(date,DISTRICT_ID)
+            available, total_centers = checkAvailability(data1,USER_AGE)
+            if available:
+                msg_body = "Slots Available at {total} places.\n{available}".format(total = total_centers,available = available)
+                print(msg_body)
+                client.messages.create(from_=TWILIO_PHONE_NUMBER,
+                           to=CELL_PHONE_NUMBER,
+                           body= msg_body)
+            else:
+                print("No Available Centers")
+            
+            time.sleep(900)
+    else:
+        print("Arguments Missing/Invalid. Check settings.json")
+            
+        
