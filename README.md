@@ -23,6 +23,13 @@ Once all the above requirements are met, do the following
 6. Run `python covin_slot_tracker.py <DISTRICT_ID> <TWILIO AUTH TOKEN> <TWILIO ACCOUNT SID> <TWILIO PHONE NUMBER> <YOUR PHONE NUMBER>` in the interactive shell. Make sure your phone number has the country code. eg: +919xxxxxxxx
 7. If there is a slot available in the district code you have provided, you will receive an SMS on your phone.
 
+#### Alternative Way
+
+1. Create `settings.json` file similar to schema in `settings.example.json` and fill in your details.
+2. Run `docker build -t covin --rm .`
+3. Run `docker run -it --name covin-schedule --rm covin`
+4. Run `python covin_slot_tracker.py`
+
 #### Example Usage and Response
 ```
 python covin_slot_tracker.py 391 09cbfca2asdad5ae4fe991ac8858adca1b AC6b24b0sdasuef906ed07sdfasd4e8d +1xxxxxxxxx +919xxxxxxxx
