@@ -34,12 +34,16 @@ sample settings.json
   "authToken": "09cbfca2asdad5ae4fe991ac8858adca1b",
   "accountSID": "AC6b24b0sdasuef906ed07sdfasd4e8d",
   "twilioPhone": "+1xxxxxxxxx",
-  "selfPhone": "+919xxxxxxxx"
+  "selfPhone": "+919xxxxxxxx",
+  "userAge": "45"
 }
 ```
 Response
 ```
-{"value1": "Slot Available: Rahata RH, Taharabad RH, Shevgaon RH, KARJAT SDH2, CHICHONDI PATIL RH 2, WAMBORI RH 2, Rajur RH, Chichondi Patil RH, SAKUR RH 2, Samsherpur RH, Khirwire PHC, SHEVGAON RH2, Wambori RH, PUNTAMBA RH 2, Jamkhed RH, SAMSHERPUR RH 2, RAHURI RH 2, Taklibhan PHC, Takali Dokeshwar RH, Chapadgaon(S) PHC, Dr Mane Hospital, JAMKHED RH 2, Bota PHC, Puntamba RH, Topkhana HP, GHODEGAON RH 2, Bodhegaon RH, TAKALI DHOKESHWAR RH 2, TAHRABAD RH 2, Sakur RH, Shendi PHC, BODHEGAON RH 2, RAJUR RH 2, LONI RH 2"}
+Slots Available at 16 places.
+SAKUR RH 2, Samsherpur RH, NIRAMAY HOSPITAL, Rahata RH, Chichondi Patil RH, Sakur RH, WAMBORI RH 2, 
+Wambori RH, JAMKHED RH 2, Topkhana HP, Rajur RH, SHRIRAMPUR RH 2, CHICHONDI PATIL RH 2, TAKALI DHOKESHWAR RH 2, 
+RAJUR RH 2, SAMSHERPUR RH 2
 
 Here 391 is the district id for Ahmednagar, Maharashtra
 ```
