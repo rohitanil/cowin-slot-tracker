@@ -100,7 +100,7 @@ if __name__ == "__main__":
 
         client = Client(ACCOUNT_SID, SECRET_TOKEN)
         while(True):
-            smsSent = False
+            sms_sent = False
             for i in range(90):
                 date = getDate(i)
                 data1 = pingCOWIN(date, DISTRICT_ID)
@@ -109,11 +109,11 @@ if __name__ == "__main__":
                     msg_body = "Slots available for {date} at {total} places.\n{available}".format(
                         date=date, total=total_centers, available=available)
                     print(msg_body)
-                    if not smsSent:
+                    if not sms_sent:
                         client.messages.create(from_=TWILIO_PHONE_NUMBER,
                                                to=CELL_PHONE_NUMBER,
                                                body=msg_body)
-                        smsSent = True
+                        sms_sent = True
                 else:
                     print("No available centers for date " + date)
 
