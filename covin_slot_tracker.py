@@ -36,7 +36,8 @@ def pingCOWIN(date,district_id):
 
     """
     url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id={district_id}&date={date}".format(district_id = district_id, date = date)
-    response = requests.get(url)
+    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36' }
+    response = requests.get(url,headers=headers)
     return json.loads(response.text)
 
 def checkAvailability(payload, age):
