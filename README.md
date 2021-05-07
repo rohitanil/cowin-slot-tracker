@@ -5,6 +5,7 @@ Tracker to check the covid vaccine slot availability in India and send mobile no
 Docker must be installed in the local system. Refer [docker documentation](https://docs.docker.com/engine/install/) to set it locally based on your machine specification.
 If you are a Windows user and wants to setup docker, follow this [video](
 https://youtu.be/_9AWYlt86B8)
+
 ## How to use?
 There are two parts to this system
 1. Pinging the public COWIN API to get district wise data and checking for availability, every 15 minutes.
@@ -26,8 +27,9 @@ Once all the above requirements are met, do the following
 If you want to change settings, rebuild the image and run(Step 5)
 
 #### Example Response
+You can either use pincode or districtId.
 
-sample settings.json
+Sample settings.json with districtId
 ```
 {
   "districtId": "391",
@@ -37,6 +39,20 @@ sample settings.json
   "selfPhone": "+919xxxxxxxx",
   "userAge": "45"
 }
+
+```
+
+Sample settings.json with pincode
+
+{
+  "pincode": "695013",
+  "authToken": "09cbfca2asdad5ae4fe991ac8858adca1b",
+  "accountSID": "AC6b24b0sdasuef906ed07sdfasd4e8d",
+  "twilioPhone": "+1xxxxxxxxx",
+  "selfPhone": "+919xxxxxxxx",
+  "userAge": "45"
+}
+
 ```
 Response
 ```
