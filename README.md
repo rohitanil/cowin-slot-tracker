@@ -43,7 +43,7 @@ Sample settings.json with districtId
 ```
 
 Sample settings.json with pincode
-
+```
 {
   "pincode": "695013",
   "authToken": "09cbfca2asdad5ae4fe991ac8858adca1b",
@@ -52,7 +52,6 @@ Sample settings.json with pincode
   "selfPhone": "+919xxxxxxxx",
   "userAge": "45"
 }
-
 ```
 Response
 ```
