@@ -1,5 +1,5 @@
 # Cowin-Slot-Tracker
-Tracker to check the covid vaccine slot availability in India and send mobile notifications through Telegram.
+Tracker to check the covid vaccine slot availability in your district and send mobile notifications through Telegram.
 
 ## Requirements
 Docker must be installed in the local system. Refer [docker documentation](https://docs.docker.com/engine/install/) to set it locally based on your machine specification.
@@ -10,8 +10,8 @@ https://youtu.be/_9AWYlt86B8)
 There are two parts to this system
 1. Pinging the public COWIN API to get district wise data and checking for availability, every 15 minutes.
 2. Relaying this information to the user's mobile via Telegram Bot. For that, you need to create a bot. Follow this [tutorial](https://sendpulse.com/knowledge-base/chatbot/create-telegram-chatbot) to create a telegram bot. Refer the `How to Create a New Bot for Telegram` section. Note the `TOKEN`.
-3. Now, open Telegram App and type @Get_Channel_User_Telegram_ID_Bot, and go to the chat. Type something and this should help you get your `Telegram ID`, which is your chat id. Note that as well
-4. After successfully completing above steps, you are good to go.
+3. Now, open Telegram App and type `@Get_Channel_User_Telegram_ID_Bot`, and go to the chat. Type something and this should help you get your `Telegram ID`, which is your chat id. Note that as well.
+4. After successfully completing the above steps, you are good to go.
 
 Once all the above requirements are met, do the following
 1. Git clone this repository(if you are techie enough), otherwise download the repository by clicking on `Download ZIP` under `Code`.
@@ -25,7 +25,7 @@ Once all the above requirements are met, do the following
 If you want to change settings, rebuild the image and run(Step 5)
 
 #### Example Response
-You can either use pincode or districtId.
+You can either use `pincode` or `districtId`.
 
 Sample settings.json with `districtId`
 ```
