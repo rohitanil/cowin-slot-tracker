@@ -23,27 +23,27 @@ Once all the above requirements are met, do the following
    - Run `docker run -it --name covin-schedule --rm covin`
    - If you want to change settings.json, rebuild the image and run Step 4
 5. If you have Python already installed on your system,
+   - Run `pip install -r requirements.txt`
    - Run `python covin_slot_tracker.py` 
 8. If there is a slot available in the district id or pincode you have provided, you will receive an SMS on your phone.
-
 
 #### Example Response
 You can either use `pincode` or `districtId`.
 
-Sample settings.json with `districtId`
+Sample settings.json with `pincode`
 ```
 {
-  "districtId": "391",
+  "pincode": "695013",
   "authToken": "1602################",
   "chatId" : "71############"",
   "userAge": "45"
 }
 ```
 
-Sample settings.json with `pincode`
+Sample settings.json with `districtId`
 ```
 {
-  "pincode": "695013",
+  "districtId": "391",
   "authToken": "1602################",
   "chatId" : "71############"",
   "userAge": "45"
