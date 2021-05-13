@@ -1,46 +1,25 @@
 #!/usr/bin/env python3
-import datetime,time
+import time
+from datetime import timedelta, datetime
 import os
 import requests,json
-from twilio.rest import Client
+import telegram
 
 def getDate():
     """
-    Function to get the current date
+    Function to get the next date => Today + 1 day
 
     Returns
     -------
     date : String
-        Current date in DD-MM-YYYY format
+        Next date in DD-MM-YYYY format
 
     """
-    current_time = datetime.datetime.now()
-    day = current_time.day
-    month = current_time.month
-    year = current_time.year
-    date = "{dd}-{mm}-{yyyy}".format(dd=day,mm=month,yyyy=year)
-    return date
+    tomorrow = (datetime.today() + timedelta(1)).strftime("%d-%m-%Y")
+    return tomorrow
 
 
 def pincodeToStateDistrictConverter(pincode):
-    """
-    Function to convert user entered pincode to state and district
-    using India Post Public API
-
-    Parameters
-    ----------
-    pincode : String
-        Pincode entered by user.
-
-    Returns
-    -------
-    district : String
-        District mapped to pincode.
-    state : String
-        State mapped to pincode.
-
-    """
-    
     district = ''
     state = ''
     india_post_url = "https://api.postalpincode.in/pincode/{pin}".format(pin = pincode)
@@ -56,22 +35,6 @@ def pincodeToStateDistrictConverter(pincode):
         print(e)
     
 def getStateID(state):
-    """
-    Function to get state id from state name derived by reverse engineering
-    pincode
-
-    Parameters
-    ----------
-    state : String
-        State name.
-
-    Returns
-    -------
-    state_id : String
-        ID associated with that state name
-
-    """
-    
     state_id = ''
     url = "https://cdn-api.co-vin.in/api/v2/admin/location/states"
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36' }
@@ -88,23 +51,6 @@ def getStateID(state):
     
     
 def getDistrictID(st_id, lookout_district):
-    """
-    Function to get district id from state id and district name
-
-    Parameters
-    ----------
-    st_id : String
-        ID associated with a state.
-    lookout_district : String
-        District name for which we need the district id.
-
-    Returns
-    -------
-    district_id : String
-        ID associated with a district.
-
-    """
-    
     district_id = ''
     url = "https://cdn-api.co-vin.in/api/v2/admin/location/districts/{st}".format(st = st_id)
     headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36' }
@@ -176,6 +122,27 @@ def checkAvailability(payload, age):
     
     return available_centers_str,total_available_centers
 
+def TelegramBot(TOKEN, CHAT_ID, MSG):
+    """
+    Function to send message to telegram bot
+
+    Parameters
+    ----------
+    TOKEN : STRING
+        Telegram secret token.
+    CHAT_ID : STRING
+        Telegram chat id of user/ group to which you want to send msg.
+    MSG : TYPE
+        Message sent to telegram.
+
+    Returns
+    -------
+    None.
+
+    """
+    bot = telegram.Bot(token=TOKEN)
+    bot.sendMessage(chat_id = CHAT_ID, text = MSG)
+
 
 if __name__=="__main__":
     with open("settings.json") as f:
@@ -183,15 +150,12 @@ if __name__=="__main__":
 
     # Load from JSON file
     flag = False
-    key_list = ["authToken","accountSID","twilioPhone","selfPhone","userAge"]
+    key_list = ["authToken","chatId","selfPhone","userAge"]
     if all(key in settings for key in key_list):
         SECRET_TOKEN = settings["authToken"]
-        ACCOUNT_SID = settings["accountSID"]
-        TWILIO_PHONE_NUMBER = settings["twilioPhone"]
-        CELL_PHONE_NUMBER = settings["selfPhone"]
+        CHAT_ID = settings["chatId"]
         USER_AGE = int(settings["userAge"])
         
-        client = Client(ACCOUNT_SID, SECRET_TOKEN)
         
         if("pincode" in settings.keys()):
             PINCODE = settings["pincode"]
@@ -219,9 +183,7 @@ if __name__=="__main__":
                 if available:
                     msg_body = "Slots Available at {total} places.\n{available}".format(total = total_centers,available = available)
                     print(msg_body)
-                    client.messages.create(from_=TWILIO_PHONE_NUMBER,
-                               to=CELL_PHONE_NUMBER,
-                               body= msg_body)
+                    TelegramBot(SECRET_TOKEN,CHAT_ID,msg_body)
                 else:
                     print("No Available Centers")
 

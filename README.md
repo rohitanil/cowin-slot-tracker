@@ -1,5 +1,5 @@
 # Cowin-Slot-Tracker
-Tracker to check the covid vaccine slot availability in India and send mobile notifications through Twilio Messaging Service.
+Tracker to check the covid vaccine slot availability in India and send mobile notifications through Telegram.
 
 ## Requirements
 Docker must be installed in the local system. Refer [docker documentation](https://docs.docker.com/engine/install/) to set it locally based on your machine specification.
@@ -9,14 +9,12 @@ https://youtu.be/_9AWYlt86B8)
 ## How to use?
 There are two parts to this system
 1. Pinging the public COWIN API to get district wise data and checking for availability, every 15 minutes.
-2. Relaying this information to the user's mobile via Twilio Messaging Service. For that, one must configure Twilio
-    1. Sign up on [Twilio](https://www.twilio.com/) using your email id. After verifying your email log into the Twilio Dashboard. For this purpose, we will remain on free trial.
-    2. Once you are in the dashboard, click **Get a trial phone number**.
-    3. Under Project Info, you can find the **ACCOUNT SID**, **AUTH TOKEN** and **PHONE NUMBER** (Twilio Phone Number and not yours). Make a note of these numbers.
+2. Relaying this information to the user's mobile via Telegram Bot. For that, you need to create a bot. Follow this [tutorial](https://sendpulse.com/knowledge-base/chatbot/create-telegram-chatbot) to create a telegram bot. Refer the `How to Create a New Bot for Telegram` section. Note the `TOKEN`.
+3. Now, open Telegram App and type @Get_Channel_User_Telegram_ID_Bot, and go to the chat. Type something and this should help you get your `Telegram ID`, which is your chat id. Note that as well
 4. After successfully completing above steps, you are good to go.
 
 Once all the above requirements are met, do the following
-1. Git clone this repository(if you are techie enough), otherwise download the repository by clicking on **Download ZIP** under **Code**.
+1. Git clone this repository(if you are techie enough), otherwise download the repository by clicking on `Download ZIP` under `Code`.
 2. Open Terminal and change your directory to the folder you have just cloned/ downloaded. (Remember to extract the .zip file if you have downloaded it)
 3. Make sure Docker Desktop is running.
 4. Modify `settings.json` with your settings.   
@@ -29,30 +27,20 @@ If you want to change settings, rebuild the image and run(Step 5)
 #### Example Response
 You can either use pincode or districtId.
 
-Sample settings.json with districtId
+Sample settings.json with `districtId`
 ```
 {
   "districtId": "391",
-  "authToken": "09cbfca2asdad5ae4fe991ac8858adca1b",
-  "accountSID": "AC6b24b0sdasuef906ed07sdfasd4e8d",
-  "twilioPhone": "+1xxxxxxxxx",
-  "selfPhone": "+919xxxxxxxx",
-  "userAge": "45"
-}
-
-```
-
-Sample settings.json with pincode
-```
-{
-  "pincode": "695013",
-  "authToken": "09cbfca2asdad5ae4fe991ac8858adca1b",
-  "accountSID": "AC6b24b0sdasuef906ed07sdfasd4e8d",
-  "twilioPhone": "+1xxxxxxxxx",
-  "selfPhone": "+919xxxxxxxx",
+  "authToken": "1602################",
+  "chatId" : "71############"",
+  "selfPhone": "+91#########",
   "userAge": "45"
 }
 ```
+  "userAge": "45"
+}
+```
+
 Response
 ```
 Slots Available at 16 places.
