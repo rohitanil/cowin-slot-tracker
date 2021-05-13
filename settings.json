@@ -1,8 +1,7 @@
 {
   "districtId": "<DISTRICT_ID>",
-  "authToken": "<TWILIO_AUTH_TOKEN>",
-  "accountSID": "<TWILIO_ACCOUNT_SID>",
-  "twilioPhone": "<TWILIO_PHONE_NO>",
+  "authToken": "<TELEGRAM_AUTH_TOKEN>",
+  "chatID": "<TELEGRAM_CHAT_ID>",
   "selfPhone": "<YOUR_PHONE_NO>",
   "userAge": "<AGE>"
 }
