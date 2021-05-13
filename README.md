@@ -10,7 +10,7 @@ There are two parts to this system
 1. Pinging the public COWIN API to get district wise data and checking for availability, every 15 minutes.
 2. Open Telegram App and type `@Get_Channel_User_Telegram_ID_Bot` or go to https://t.me/Get_Channel_User_Telegram_ID_Bot and type Hi in the chat
 You should get something like
-<img src="telegram_get_id.png"/>
+![TeleGet](telegram_get_id.PNG)
 
 Use your Telegram id and add it to setting.json file in Telegram_ID section
 Eg:
@@ -25,7 +25,7 @@ Eg:
 https://docs.anaconda.com/anaconda/install/ depending on your operating system i.e Windows, Linux, MAC
 
 5. Post installation of Anaconda, go to your start menu and search for Spyder application
-<img src="spyder_logo.png"/>
+![SpyderLogo](spyder_logo.PNG)
 
 
 Once all the above requirements are met, do the following
@@ -40,7 +40,7 @@ Eg:
 
 3. Open Spyder application
 4. Go to the folder you downloaded and open the file covin_slot_tracker.py
-5. Click on the run button <img src="spyder_run_button.png"/>
+5. Click on the run button ![SpyderRun](spyder_run_button.PNG)
 6. If there is a slot available in the district code you have provided, you will receive an message on Telegram on your phone.
 
 
