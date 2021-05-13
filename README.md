@@ -37,6 +37,14 @@ Sample settings.json with `districtId`
   "userAge": "45"
 }
 ```
+
+Sample settings.json with `pincode`
+```
+{
+  "districtId": "391",
+  "authToken": "1602################",
+  "chatId" : "71############"",
+  "selfPhone": "+91#########",
   "userAge": "45"
 }
 ```
