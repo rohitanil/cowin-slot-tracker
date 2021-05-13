@@ -1,7 +1,5 @@
 {
   "districtId": "<DISTRICT_ID>",
-  "authToken": "<TELEGRAM_AUTH_TOKEN>",
-  "chatID": "<TELEGRAM_CHAT_ID>",
-  "selfPhone": "<YOUR_PHONE_NO>",
+  "Telegram_ID": "<TELEGRAM_CHAT_ID>",
   "userAge": "<AGE>"
 }
