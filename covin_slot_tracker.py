@@ -150,7 +150,7 @@ if __name__=="__main__":
 
     # Load from JSON file
     flag = False
-    key_list = ["authToken","chatId","selfPhone","userAge"]
+    key_list = ["Telegram_ID","userAge"]
     if all(key in settings for key in key_list):
         SECRET_TOKEN = settings["authToken"]
         CHAT_ID = settings["chatId"]
@@ -183,7 +183,10 @@ if __name__=="__main__":
                 if available:
                     msg_body = "Slots Available at {total} places.\n{available}".format(total = total_centers,available = available)
                     print(msg_body)
-                    TelegramBot(SECRET_TOKEN,CHAT_ID,msg_body)
+                    telegram_txt = str((f'Slots Available at {total_centers} places.\n{available}'))
+                    base_url = 'https://api.telegram.org/bot1801976621:AAHk9BvV4r9d_ITf-wCppIqcGYNQQMsK5cs/sendMessage?chat_id={}&text={}'.format(Telegram_ID,
+                        (telegram_txt))
+                    requests.get(base_url)
                 else:
                     print("No Available Centers")
 
