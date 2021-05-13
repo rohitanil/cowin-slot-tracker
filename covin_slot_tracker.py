@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 import time
 from datetime import timedelta, datetime
-import os
+import os,sys
 import requests,json
-import telegram
 
 def getDate():
     """
@@ -23,7 +22,6 @@ def pincodeToStateDistrictConverter(pincode):
     district = ''
     state = ''
     india_post_url = "https://api.postalpincode.in/pincode/{pin}".format(pin = pincode)
-    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36' }
     try:
         response = requests.get(india_post_url,headers=headers)
         parsed_response = json.loads(response.text)
@@ -37,7 +35,6 @@ def pincodeToStateDistrictConverter(pincode):
 def getStateID(state):
     state_id = ''
     url = "https://cdn-api.co-vin.in/api/v2/admin/location/states"
-    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36' }
     try:
         response = requests.get(url,headers=headers)
         parsed_response = json.loads(response.text)
@@ -53,7 +50,6 @@ def getStateID(state):
 def getDistrictID(st_id, lookout_district):
     district_id = ''
     url = "https://cdn-api.co-vin.in/api/v2/admin/location/districts/{st}".format(st = st_id)
-    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36' }
     try:
         response = requests.get(url,headers=headers)
         parsed_response = json.loads(response.text)
@@ -81,7 +77,6 @@ def pingCOWIN(date,district_id):
 
     """
     url = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id={district_id}&date={date}".format(district_id = district_id, date = date)
-    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36' }
     response = requests.get(url,headers=headers)
     return json.loads(response.text)
 
@@ -122,7 +117,7 @@ def checkAvailability(payload, age):
     
     return available_centers_str,total_available_centers
 
-def TelegramBot(TOKEN, CHAT_ID, MSG):
+def sendTelegramMessage(TOKEN, CHAT_ID, MSG):
     """
     Function to send message to telegram bot
 
@@ -140,17 +135,23 @@ def TelegramBot(TOKEN, CHAT_ID, MSG):
     None.
 
     """
-    bot = telegram.Bot(token=TOKEN)
-    bot.sendMessage(chat_id = CHAT_ID, text = MSG)
+    url = "https://api.telegram.org/bot{token}/sendMessage?".format(token = TOKEN)
+    payload = url + "chat_id={chat_id}&text={msg}".format(chat_id = CHAT_ID, msg = MSG)
+    status = json.loads((requests.get(payload)).text).get('ok')
+    if(status == False):
+        print("Message sending to telegram failed. Check Telegram ID or Telegram Token entered. Exiting!!!")
+        sys.exit()
 
 
 if __name__=="__main__":
+    
+    headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36' }
     with open("settings.json") as f:
         settings = json.load(f)
 
     # Load from JSON file
     flag = False
-    key_list = ["authToken","chatId","selfPhone","userAge"]
+    key_list = ["authToken","chatId","userAge"]
     if all(key in settings for key in key_list):
         SECRET_TOKEN = settings["authToken"]
         CHAT_ID = settings["chatId"]
@@ -183,7 +184,7 @@ if __name__=="__main__":
                 if available:
                     msg_body = "Slots Available at {total} places.\n{available}".format(total = total_centers,available = available)
                     print(msg_body)
-                    TelegramBot(SECRET_TOKEN,CHAT_ID,msg_body)
+                    sendTelegramMessage(SECRET_TOKEN,CHAT_ID,msg_body)
                 else:
                     print("No Available Centers")
 
