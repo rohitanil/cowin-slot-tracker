@@ -31,8 +31,8 @@ Once all the above requirements are met, do the following
 3. Modify `settings.json` with your settings.   
 4. Open Spyder which is an Python IDE and run `covin_slot_tracker.py` file.
    ![Spyder](/images/spyder.PNG)
-  In case you need help on how to run kindly watch this 3 minute video to understand how to navigate in the application [Spyder - Getting Stated](https://youtu.be/E2Dap5SfXkI)
-5. If there is a slot available in the district id or pincode you have provided, you will receive an SMS on your phone.
+5. In case you need help on how to run kindly watch this 3 minute video to understand how to navigate in the application [Spyder - Getting Stated](https://youtu.be/E2Dap5SfXkI)
+6. If there is a slot available in the district id or pincode you have provided, you will receive an SMS on your phone.
 
 #### Example Response
 You can either use `pincode` or `districtId`.
