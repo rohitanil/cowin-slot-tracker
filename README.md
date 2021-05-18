@@ -35,7 +35,7 @@ Sample settings.json with `pincode`
 {
   "pincode": "695013",
   "authToken": "1602################",
-  "chatId" : "71############"",
+  "chatId" : "71############",
   "userAge": "45"
 }
 ```
@@ -45,7 +45,7 @@ Sample settings.json with `districtId`
 {
   "districtId": "391",
   "authToken": "1602################",
-  "chatId" : "71############"",
+  "chatId" : "71############",
   "userAge": "45"
 }
 ```
