@@ -2,30 +2,37 @@
 Tracker to check the covid vaccine slot availability in your district and send mobile notifications through Telegram.
 
 ## Requirements
-Python 3.0+ or Docker must be installed in the local system. 
-  - For Docker: Refer [docker documentation](https://docs.docker.com/engine/install/) to set it locally based on your machine specification.If you are a Windows user and wants to setup docker, follow this [video](https://youtu.be/_9AWYlt86B8)
-  - If you cannot install Docker on your system, install Python by following this [link](https://www.tutorialsteacher.com/python/install-python)
+Anaconda
+  - For Anaconda: Refer [Anaconda](https://docs.anaconda.com/anaconda/install/) to set it locally based on your machine specification.If you are a Windows user and wants to setup Anaconda, follow this [WINDOWS INSTALLATION](https://www.youtube.com/watch?v=syijLJ3oQzU&ab_channel=AmitThinksAmitThinks), for MAC follow [MAC INSTALLATION](https://www.youtube.com/watch?v=V6ZAv7hBH6Y&ab_channel=JustUnderstandingData) and for LINUX [LINUX INSTALLATION](https://www.youtube.com/watch?v=WFswV4J2ZEs&ab_channel=BoostUpStation)
 
 ## How to use?
 There are two parts to this system
 1. Pinging the public COWIN API to get district wise data and checking for availability, every 15 minutes.
-2. Relaying this information to the user's mobile via Telegram Bot. 
-    - For that, you need to create a bot. Follow this [tutorial](https://sendpulse.com/knowledge-base/chatbot/create-telegram-chatbot) to create a telegram bot. Refer the `How to Create a New Bot for Telegram` section. Note the `TOKEN`.
+2. Relaying this information to the user's mobile via Telegram Bot.
+    - Open Anaconda Power Shell Prompt as shown in the image below
+      ![AnancondaPowershell](/images/anaconda_prompt.PNG)
+    - Type in ```pip install telegram-send```
+    - Type in ```telegram-send configure```
+    - Then follow the steps mentioned here [Setting up Telegram Bot](https://medium.com/@robertbracco1/how-to-write-a-telegram-bot-to-send-messages-with-python-bcdf45d0a580) to create a telegram bot.[Only follow till Step 2]
     - Now, open Telegram App and type `@Get_Channel_User_Telegram_ID_Bot`, and go to the chat. Type something and this should help you get your `Telegram ID`, which is your chat id. Note that as well.
-    - After successfully completing the above steps, you are good to go.
+    - After successfully completing the above steps, update your settings.json and update your
+      ```
+      {
+        "authToken": "1602################",
+        "chatId" : "71############"",
+      }
+      ```
+
+      and then you are good to go.
 
 Once all the above requirements are met, do the following
 1. Git clone this repository(if you are techie enough), otherwise download the repository by clicking on `Download ZIP` under `Code`.
 2. Open Terminal and change your directory to the folder you have just cloned/ downloaded. (Remember to extract the .zip file if you have downloaded it)
 3. Modify `settings.json` with your settings.   
-4. If you are going the Docker way, make sure Docker Desktop is running.
-   - Run `docker build -t covin --rm .`
-   - Run `docker run -it --name covin-schedule --rm covin`
-   - If you want to change settings.json, rebuild the image and run Step 4
-5. If you have Python already installed on your system,
-   - Run `pip install -r requirements.txt`
-   - Run `python covin_slot_tracker.py` 
-8. If there is a slot available in the district id or pincode you have provided, you will receive an SMS on your phone.
+4. Open Spyder which is an Python IDE and run `covin_slot_tracker.py` file.
+   ![Spyder](/images/spyder.PNG)
+5. In case you need help on how to run kindly watch this 3 minute video to understand how to navigate in the application [Spyder - Getting Stated](https://youtu.be/E2Dap5SfXkI)
+6. If there is a slot available in the district id or pincode you have provided, you will receive an SMS on your phone.
 
 #### Example Response
 You can either use `pincode` or `districtId`.
@@ -53,8 +60,8 @@ Sample settings.json with `districtId`
 Response
 ```
 Slots Available at 16 places.
-SAKUR RH 2, Samsherpur RH, NIRAMAY HOSPITAL, Rahata RH, Chichondi Patil RH, Sakur RH, WAMBORI RH 2, 
-Wambori RH, JAMKHED RH 2, Topkhana HP, Rajur RH, SHRIRAMPUR RH 2, CHICHONDI PATIL RH 2, TAKALI DHOKESHWAR RH 2, 
+SAKUR RH 2, Samsherpur RH, NIRAMAY HOSPITAL, Rahata RH, Chichondi Patil RH, Sakur RH, WAMBORI RH 2,
+Wambori RH, JAMKHED RH 2, Topkhana HP, Rajur RH, SHRIRAMPUR RH 2, CHICHONDI PATIL RH 2, TAKALI DHOKESHWAR RH 2,
 RAJUR RH 2, SAMSHERPUR RH 2
 
 Here 391 is the district id for Ahmednagar, Maharashtra
